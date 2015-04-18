@@ -7,6 +7,7 @@ if (!defined('SYSTEM_ROOT')) { die('Insufficient Permissions'); }
  */
 
 function cron_system_sign_retry() {
+    echo "<br><br><br><br><br>进入计划重签：";
 	global $i;
 
 	$today = date('Y-m-d');
@@ -15,8 +16,12 @@ function cron_system_sign_retry() {
 	if ($sign_again['lastdo'] != $today) {
 		option::set('cron_sign_again',serialize(array('num' => 0, 'lastdo' => $today)));
 	}
-
+    echo "<br>today:".$today."======sign_again:";
+    print_r($sign_again);
+    echo"<br>";
+//    print_r($i);
 	foreach ($i['table'] as $value) {
+        echo "<br>当前table为：".$value."<br>";
 		misc::DoSign_retry($value);
 	}
 }

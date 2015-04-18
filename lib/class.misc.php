@@ -331,7 +331,10 @@ class misc {
 		if ($limit == 0) {
 			$q  = array();
 			$qs = $m->query("SELECT * FROM  `".DB_NAME."`.`".DB_PREFIX.$table."` WHERE `no` = 0 AND `lastdo` != '".$today."'");
-			while ($qss = $m->fetch_array($qs)) {
+            echo "\n当前函数：".__FILE__."==".__FUNCTION__;
+            echo "\n当前数据库查询记录：\n";
+            print_r($m->fetch_array($qs));
+            while ($qss = $m->fetch_array($qs)) {
 				$q[] = array(
 					'id'     => $qss['id'],
 					'uid'    => $qss['uid'],
@@ -347,9 +350,14 @@ class misc {
 			shuffle($q);
 		} else {
 			$q = rand_row( DB_PREFIX.$table , 'id' , $limit , "`no` = 0 AND `lastdo` != '{$today}'" , true );
+            echo "\ncrom_limit不为0，当前数据库查询记录：\n";
+            print_r($q);
 		}
 		
 		foreach ($q as $x) {
+            echo"<pre>";
+            echo"开始签到贴吧：".$x['tieba'];
+            echo"</pre>";
 			self::DoSign_All($x['uid'] , $x['tieba'] , $x['id'] , $table , $sign_mode , $x['pid'] , $x['fid']);
 		}
 	}
@@ -358,7 +366,7 @@ class misc {
 	 * 执行一个表的签到重試任务
 	 * @param $table 表
 	 */
-	function DoSign_retry($table) {
+	static function DoSign_retry($table) {
 		global $m,$i;
 		$today = date('Y-m-d');
 		if (date('H') <= option::get('sign_hour')) {
@@ -374,6 +382,9 @@ class misc {
 		if ($limit == 0) {
 			if ($retry_max == '0' || ($sign_again['lastdo'] == $today && $sign_again['num'] <= $retry_max && $retry_max != '-1') ) {
 				$qs = $m->query("SELECT * FROM  `".DB_NAME."`.`".DB_PREFIX.$table."` WHERE `no` = 0 AND `status` != '0'");
+                echo "\n当前函数：".__FILE__."==".__FUNCTION__;
+                echo "\n当前数据库查询记录：\n";
+                print_r($m->fetch_array($qs));
 				while ($qss = $m->fetch_array($qs)) {
 					$q[] = array(
 						'id'     => $qss['id'],
@@ -392,10 +403,15 @@ class misc {
 		} else {
 			if ($retry_max == '0' || ($sign_again['lastdo'] == $today && $sign_again['num'] <= $retry_max && $retry_max != '-1') ) {
 				$q = rand_row( DB_PREFIX.$table , 'id' , $limit , "`no` = 0 AND `status` != '0' AND `lastdo` = '{$today}'" , true );
-			}
+                echo "\ncrom_limit不为0，当前数据库查询记录：\n";
+                print_r($q);
+            }
 		}
 
 		foreach ($q as $x) {
+            echo"<pre>";
+            echo"开始签到贴吧：".$x['tieba'];
+            echo"</pre>";
 			self::DoSign_All($x['uid'] , $x['tieba'] , $x['id'] , $table , $sign_mode , $x['pid'] , $x['fid']);
 		}
 	}

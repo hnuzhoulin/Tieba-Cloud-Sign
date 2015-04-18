@@ -9,9 +9,9 @@ define('DB_HOST','localhost');
 //MySQL 数据库用户名
 define('DB_USER','root');
 //MySQL 数据库密码
-define('DB_PASSWD','000000');
+define('DB_PASSWD','1qaz2wsx@mysql');
 //MySQL 数据库名称(存放百度贴吧云签到的)
-define('DB_NAME','tiebacloud');
+define('DB_NAME','tieba');
 //MySQL 数据库前缀，建议保持默认
 define('DB_PREFIX','tc_');
 

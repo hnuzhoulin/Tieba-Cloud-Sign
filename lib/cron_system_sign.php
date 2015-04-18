@@ -15,8 +15,12 @@ function cron_system_sign() {
 	if ($sign_again['lastdo'] != $today) {
 		option::set('cron_sign_again',serialize(array('num' => 0, 'lastdo' => $today)));
 	}
-
+    echo "<br>进入计划签到：";
+    echo "<br>today:".$today."======sign_again:";
+    print_r($sign_again);
+    echo"<br>";
 	foreach ($i['table'] as $value) {
+        echo "<br>当前table为：".$value."<br>";
 		$return = misc::DoSign($value);
 	}
 	return $return;
