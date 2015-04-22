@@ -31,7 +31,7 @@ class S extends wmysql {
 	 */
 	public function rand($t , $c = 'id' , $n = '1', $w = '' , $f = false , $p = 'tempval_') {
 		if (!empty($w)) {
-			$w = ' AND '.$w;
+//			$w = ' AND '.$w;
 		}
 	/* //格式化的原句
 	SELECT * 
@@ -51,8 +51,10 @@ class S extends wmysql {
 		{$p}t1.{$c}
 	LIMIT {$n};
 	*/
-		$sql = "SELECT * FROM `{$t}` AS {$p}t1 JOIN ( SELECT ROUND( RAND() * ((SELECT MAX({$c}) FROM `{$t}`) - (SELECT MIN({$c}) FROM `{$t}`))) AS {$p}id ) AS {$p}t2 WHERE {$p}t1.{$c} >= {$p}t2.{$p}id {$w} ORDER BY {$p}t1.{$c} LIMIT {$n};";
-		$xq  = $this->query($sql);
+//		$sql = "SELECT * FROM `{$t}` AS {$p}t1 JOIN ( SELECT ROUND( RAND() * ((SELECT MAX({$c}) FROM `{$t}`) - (SELECT MIN({$c}) FROM `{$t}`))) AS {$p}id ) AS {$p}t2 WHERE {$p}t1.{$c} >= {$p}t2.{$p}id {$w} ORDER BY {$p}t1.{$c} LIMIT {$n};";
+		$sql = "SELECT * FROM `{$t}` WHERE  {$w} ";
+		echo "sql语句为：",$sql;
+        $xq  = $this->query($sql);
 		$r   = array();
 		while ($x = $this->fetch_array($xq)) {
 			$r[] = $x;

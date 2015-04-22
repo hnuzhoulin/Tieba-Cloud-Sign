@@ -350,7 +350,9 @@ class misc {
 			shuffle($q);
 		} else {
 			$q = rand_row( DB_PREFIX.$table , 'id' , $limit , "`no` = 0 AND `lastdo` != '{$today}'" , true );
-            echo "\ncrom_limit不为0，当前数据库查询记录：\n";
+            echo "<br>cron_limit:",$limit,"<br>当前数据库查询语句为：<br>";
+            echo "table:",DB_PREFIX.$table , '  id  ' , $limit , "  `no` = 0 AND `lastdo` != '{$today}'";
+            echo "<br>当前数据库查询结果为：<br>";
             print_r($q);
 		}
 		
@@ -403,11 +405,12 @@ class misc {
 		} else {
 			if ($retry_max == '0' || ($sign_again['lastdo'] == $today && $sign_again['num'] <= $retry_max && $retry_max != '-1') ) {
 				$q = rand_row( DB_PREFIX.$table , 'id' , $limit , "`no` = 0 AND `status` != '0' AND `lastdo` = '{$today}'" , true );
-                echo "\ncrom_limit不为0，当前数据库查询记录：\n";
+                echo "<br>cron_limit:",$limit,"<br>当前数据库查询语句为：<br>";
+                echo "table:",DB_PREFIX.$table , '  id  ' , $limit , "  `no` = 0 AND `status` != '0'  `lastdo` != '{$today}'";
+                echo "<br>当前数据库查询结果为：<br>";
                 print_r($q);
             }
 		}
-
 		foreach ($q as $x) {
             echo"<pre>";
             echo"开始签到贴吧：".$x['tieba'];
